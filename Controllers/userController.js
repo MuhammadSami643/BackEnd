@@ -1,10 +1,24 @@
-const user = [];
+const { hash } = require("bcryptjs");
+
+const users = [];
 module.exports = {
-  createUser: (req, res) => {
+  createUser: async (req, res) => {
     try {
-      user.push(req.body);
+      const { username, password } = req.body;
+      users.map((user) => {
+        if (user.username === username) {
+          return res.send({
+            response: "User Already Exists ",
+          });
+        }
+      });
+      password = await hash(password, 10);
+      users.push({ username, password });
       return res.send({
-        response: `user created with username:${req.body.username}`,
+        response: {
+          username,
+          password,
+        },
       });
     } catch (error) {
       return res.send({
@@ -12,10 +26,33 @@ module.exports = {
       });
     }
   },
-  getUsers: (req, res) => {
+  getAllUsers: (req, res) => {
     try {
       return res.send({
-        response: user,
+        response: users,
+      });
+    } catch (error) {
+      return res.send({
+        error: error,
+      });
+    }
+  },
+  getUser: (req, res) => {
+    try {
+      const { username } = req.query;
+      users.map((user) => {
+        if (user.username === username) {
+          return res.send({
+            response: user,
+          });
+        }
+        return res.send({
+          response: "User does not exist",
+        });
+      });
+
+      return res.send({
+        response: users,
       });
     } catch (error) {
       return res.send({

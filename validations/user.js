@@ -19,4 +19,19 @@ module.exports = {
       });
     }
   },
+  getUserSchema: async (req, res, next) => {
+    const username = Joi.object({
+      username: Joi.string()
+        .pattern(new RegExp("^[a-zA-Z0-9_]{3,34}$"))
+        .required(),
+    });
+    try {
+      await username.validateAsync(req.query);
+      next();
+    } catch (error) {
+      return res.send({
+        error: error.message,
+      });
+    }
+  },
 };
