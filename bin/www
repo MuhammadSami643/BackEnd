@@ -7,6 +7,7 @@
 var app = require("../app");
 var debug = require("debug")("backend:server");
 var http = require("http");
+var { db } = require("../Models/index"); // INDEX IS OUR CENTRAL POINT OF DATABASE THAT'S WHY WE ONLY IMPORT INDEX FILE HERE
 
 /**
  * Get port from environment and store in Express.
@@ -24,18 +25,32 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-(async () => {
-  try {
+
+// FIRSTLY WE START OUR SERVER LIKE THIS BUT KNOW WE WANT TO CONNECT THIS WITH DATABASE THAT'S WHY WE USE ANOTHER WAY
+// (async () => {
+//   try {
+//     server.listen(port);
+//     server.on("error", onError);
+//     server.on("listening", onListening);
+//     return `App is Running on ${port}`;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })().then((res) => {
+//   console.log(res);
+// });
+
+//WHAT IF WANT TO ADD NEW ATTRIBUTES IN OUR DB TABLE? ALTER WORKS HERE, THIS DIDN'T DELETE OUR OLD DB TABLE BUT IT CAN UPDATE OUR EXISTING TABLE WITH NEW CHANGES AND WHICH QUERY RUNS, LOGGING SHOWS US IN CONSOLE
+db.sequelize
+  .sync({ alter: true, logging: false })
+  .then(() => {
     server.listen(port);
     server.on("error", onError);
     server.on("listening", onListening);
-    return `App is Running on ${port}`;
-  } catch (error) {
-    console.log(error);
-  }
-})().then((res) => {
-  console.log(res);
-});
+  })
+  .catch((error) => {
+    console.error("ERROR DURING CONNECTING DATABASE :", error);
+  });
 
 /**
  * Normalize a port into a number, string, or false.
