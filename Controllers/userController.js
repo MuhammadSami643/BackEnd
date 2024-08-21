@@ -15,7 +15,7 @@ const { username, password } = req.body;
       users.map((user) => {
         if (user.username === username) {
           return res.send({
-            response: "User Already Exists ",
+            response: "User Already Exists",
           });
         }
       });
