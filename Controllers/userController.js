@@ -1,19 +1,13 @@
 const { models } = require("../Models");
 const { createUser, getAllUser } = require("../Models/userModel");
+const responeHandler = require("../responseHandler");
 
 // const users = [];
 module.exports = {
   createUser: async (req, res) => {
     try {
       const user = await createUser(req.body);
-      if (user.error) {
-        return res.send({
-          error: user.error,
-        });
-      }
-      return res.send({
-        response: user.response,
-      });
+      responeHandler(user, res);
 
       /*     Our Old work when we didn't use any data base to store information and we store our information in array  
 
@@ -43,14 +37,7 @@ const { username, password } = req.body;
   getAllUsers: async (req, res) => {
     try {
       const users = await getAllUser();
-      if (users.error) {
-        return res.send({
-          error: users.error,
-        });
-      }
-      return res.send({
-        response: users.response,
-      });
+      responeHandler(users, res);
     } catch (error) {
       return res.send({
         error: error,
