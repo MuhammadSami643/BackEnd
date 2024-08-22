@@ -1,4 +1,5 @@
 const { models } = require("../Models");
+const { getRole } = require("../Models/commonModel");
 const { createUser, getAllUser } = require("../Models/userModel");
 const responeHandler = require("../responseHandler");
 
@@ -6,6 +7,15 @@ const responeHandler = require("../responseHandler");
 module.exports = {
   createUser: async (req, res) => {
     try {
+      const role = await getRole(req.body);
+      if (role.error) {
+        return res.send({
+          error: role.error,
+        });
+      }
+      delete req.body.role;
+      console.log(role);
+      req.body.roleId = role.response.dataValues.roleId;
       const user = await createUser(req.body);
       responeHandler(user, res);
 
@@ -30,7 +40,7 @@ const { username, password } = req.body;
 */
     } catch (error) {
       return res.send({
-        error: error,
+        error: error.message,
       });
     }
   },

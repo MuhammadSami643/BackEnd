@@ -3,6 +3,7 @@ const Joi = require("joi");
 module.exports = {
   createUserSchema: async (req, res, next) => {
     const createUser = Joi.object({
+      role: Joi.valid("Admin", "Instructer", "Trainee").required(),
       username: Joi.string()
         .pattern(new RegExp("^[a-zA-Z0-9_]{3,34}$"))
         .required(),
