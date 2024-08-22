@@ -22,9 +22,8 @@ module.exports = {
   },
   getUserSchema: async (req, res, next) => {
     const username = Joi.object({
-      username: Joi.string()
-        .pattern(new RegExp("^[a-zA-Z0-9_]{3,34}$"))
-        .required(),
+      userId: Joi.string(),
+      username: Joi.string().pattern(new RegExp("^[a-zA-Z0-9_]{3,34}$")),
     });
     try {
       await username.validateAsync(req.query);

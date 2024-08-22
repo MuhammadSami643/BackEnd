@@ -1,6 +1,11 @@
 const { models } = require("../Models");
+const {
+  createUser,
+  getAllUser,
+  getUser,
+  deleteUser,
+} = require("../Models/userModel");
 const { getRole } = require("../Models/commonModel");
-const { createUser, getAllUser } = require("../Models/userModel");
 const responeHandler = require("../responseHandler");
 
 // const users = [];
@@ -65,23 +70,20 @@ const { username, password } = req.body;
     }
 */
   },
-  getUser: (req, res) => {
+  getUser: async (req, res) => {
     try {
-      const { username } = req.query;
-      users.map((user) => {
-        if (user.username === username) {
-          return res.send({
-            response: user,
-          });
-        }
-        return res.send({
-          response: "User does not exist",
-        });
-      });
-
+      const users = await getUser(req.query);
+      responeHandler(users, res);
+    } catch (error) {
       return res.send({
-        response: users,
+        error: error,
       });
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      const users = await deleteUser(req.query);
+      responeHandler(users, res);
     } catch (error) {
       return res.send({
         error: error,
