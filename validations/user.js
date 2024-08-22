@@ -42,6 +42,14 @@ module.exports = {
     const getAllUser = Joi.object({
       pageNo: Joi.number().required(),
       limit: Joi.number().valid(3, 6).required(),
+      orderWith: Joi.string().valid(
+        "firstName",
+        "lastName",
+        "email",
+        "username",
+        "phone"
+      ),
+      orderBy: Joi.string().valid("ASC", "DESC"),
     });
     try {
       await getAllUser.validateAsync(req.query);

@@ -27,6 +27,12 @@ module.exports = {
             attributes: ["role"],
           },
         ],
+        order: [
+          [
+            query.orderWith ? query.orderWith : "firstName",
+            query.orderBy ? query.orderBy : "ASC",
+          ],
+        ],
         offset: query.offset,
         limit: query.limit,
       });
