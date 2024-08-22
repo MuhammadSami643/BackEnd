@@ -1,6 +1,6 @@
 const { query } = require("express");
 const { models } = require("./index");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 module.exports = {
   createUser: async (body) => {
@@ -101,6 +101,25 @@ module.exports = {
       return response.send({
         error: error.message,
       });
+    }
+  },
+  updateUser: async ({ userId, ...body }) => {
+    try {
+      const user = await models.users.update(
+        { ...body },
+        {
+          where: {
+            userId: userId,
+          },
+        }
+      );
+      return {
+        response: user,
+      };
+    } catch (error) {
+      return {
+        error: error,
+      };
     }
   },
 };

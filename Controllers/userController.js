@@ -4,6 +4,7 @@ const {
   getAllUser,
   getUser,
   deleteUser,
+  updateUser,
 } = require("../Models/userModel");
 const { getRole } = require("../Models/commonModel");
 const responeHandler = require("../responseHandler");
@@ -85,6 +86,17 @@ const { username, password } = req.body;
       const users = await deleteUser(req.query);
 
       responeHandler(users, res);
+    } catch (error) {
+      return res.send({
+        error: error,
+      });
+    }
+  },
+  updateUser: async (req, res) => {
+    try {
+      const user = await updateUser(req.body);
+
+      responeHandler(user, res);
     } catch (error) {
       return res.send({
         error: error,

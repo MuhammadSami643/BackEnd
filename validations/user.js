@@ -66,4 +66,22 @@ module.exports = {
       });
     }
   },
+  updateUserSchema: async (req, res, next) => {
+    const updateUser = Joi.object({
+      userId: Joi.string().required(),
+      username: Joi.string(),
+      firstName: Joi.string(),
+      lastName: Joi.string(),
+      email: Joi.string(),
+      phone: Joi.string(),
+    });
+    try {
+      await updateUser.validateAsync(req.body);
+      next();
+    } catch (error) {
+      return res.send({
+        error: error.message,
+      });
+    }
+  },
 };
