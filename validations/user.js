@@ -50,6 +50,12 @@ module.exports = {
         "phone"
       ),
       orderBy: Joi.string().valid("ASC", "DESC"),
+
+      username: Joi.string(),
+      firstName: Joi.string(),
+      lastName: Joi.string(),
+      email: Joi.string(),
+      phone: Joi.string(),
     });
     try {
       await getAllUser.validateAsync(req.query);
