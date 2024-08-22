@@ -40,6 +40,9 @@ module.exports = {
           {
             model: models.roles,
             attributes: ["role"],
+            where: {
+              ...(query.role ? { role: query.role } : true),
+            },
           },
         ],
         order: [

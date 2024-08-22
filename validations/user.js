@@ -56,6 +56,7 @@ module.exports = {
       lastName: Joi.string(),
       email: Joi.string(),
       phone: Joi.string(),
+      role: Joi.string().valid("Admin", "Instructer", "Trainee"),
     });
     try {
       await getAllUser.validateAsync(req.query);
