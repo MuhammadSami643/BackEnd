@@ -12,8 +12,29 @@ users.init(
       type: DataTypes.STRING(60),
       primaryKey: true,
     },
+    firstName: {
+      type: DataTypes.STRING(256),
+      allowNull: false,
+      unique: false,
+    },
+
+    lastName: {
+      type: DataTypes.STRING(256),
+      allowNull: false,
+      unique: false,
+    },
     username: {
       type: DataTypes.STRING(250),
+      allowNull: false,
+      unique: true,
+    },
+    email: {
+      type: DataTypes.STRING(256),
+      allowNull: false,
+      unique: false,
+    },
+    phone: {
+      type: DataTypes.STRING(256),
       allowNull: false,
       unique: true,
     },

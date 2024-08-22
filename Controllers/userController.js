@@ -19,7 +19,6 @@ module.exports = {
         });
       }
       delete req.body.role;
-      console.log(role);
       req.body.roleId = role.response.dataValues.roleId;
       const user = await createUser(req.body);
       responeHandler(user, res);
@@ -83,6 +82,7 @@ const { username, password } = req.body;
   deleteUser: async (req, res) => {
     try {
       const users = await deleteUser(req.query);
+
       responeHandler(users, res);
     } catch (error) {
       return res.send({

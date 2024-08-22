@@ -7,6 +7,10 @@ module.exports = {
       username: Joi.string()
         .pattern(new RegExp("^[a-zA-Z0-9_]{3,34}$"))
         .required(),
+      firstName: Joi.string().min(3).max(18).required(),
+      lastName: Joi.string().min(3).max(18).required(),
+      email: Joi.string().email().required(),
+      phone: Joi.string().required().length(13),
       password: Joi.string()
         .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
         .required(),
