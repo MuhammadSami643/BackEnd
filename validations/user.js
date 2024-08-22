@@ -38,4 +38,18 @@ module.exports = {
       });
     }
   },
+  getAllUserSchema: async (req, res, next) => {
+    const getAllUser = Joi.object({
+      pageNo: Joi.number().required(),
+      limit: Joi.number().valid(3, 6).required(),
+    });
+    try {
+      await getAllUser.validateAsync(req.query);
+      next();
+    } catch (error) {
+      return res.send({
+        error: error.message,
+      });
+    }
+  },
 };

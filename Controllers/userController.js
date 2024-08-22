@@ -50,7 +50,8 @@ const { username, password } = req.body;
   },
   getAllUsers: async (req, res) => {
     try {
-      const users = await getAllUser();
+      req.query.offset = (req.query.pageNo - 1) * req.query.limit;
+      const users = await getAllUser(req.query);
       responeHandler(users, res);
     } catch (error) {
       return res.send({
