@@ -14,7 +14,6 @@ module.exports = {
           ? (isUser.error = "Invalid User")
           : (isUser.response = "Invalid User");
         res.cookie("auth", "undefined");
-
         return responseHandler(isUser, res);
       }
       // If user survives here that's mean its username is correct
@@ -25,7 +24,6 @@ module.exports = {
 
       if (!isValid) {
         res.cookie("auth", "undefined");
-
         return responseHandler(
           {
             response: "Invalid Credentials",
@@ -40,7 +38,7 @@ module.exports = {
       const user = isUser.response.dataValues;
       delete user.password;
 
-      const token = sign(user, process.env.SECRET);
+      const token = sign(user, process.env.SECRET, { expiresIn: 15 });
       res.cookie("auth", token);
       return responseHandler({ response: token }, res);
     } catch (error) {

@@ -138,7 +138,7 @@ module.exports = {
         include: [
           {
             model: models.roles,
-            attributes: ["role"],
+            attributes: ["roleId", "role"],
           },
         ],
       });
@@ -148,6 +148,23 @@ module.exports = {
     } catch (error) {
       return response.send({
         error: error.message,
+      });
+    }
+  },
+  getProfile: async ({ userId }) => {
+    try {
+      const user = await models.users.findOne({
+        where: {
+          userId: userId,
+        },
+        exclude: ["password"],
+      });
+      return {
+        response: user,
+      };
+    } catch (error) {
+      return res.send({
+        error: error,
       });
     }
   },
